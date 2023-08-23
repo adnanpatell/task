@@ -1,6 +1,12 @@
 import React from 'react';
-
+import google from "../Image/google.png"
 const AuthForm = () => {
+    const googleAuth = () =>{
+        window.open(
+            "http://localhost:8080/auth/google/callback",
+            "_self"
+        )
+    }
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-md w-96">
@@ -30,6 +36,7 @@ const AuthForm = () => {
           >
             Sign In
           </button>
+          <span> <button onClick={googleAuth}><img className="pt-2 w-10 h-10" src={google} alt="Sign IN with Google" /></button></span>
         </form>
       </div>
     </div>
