@@ -6,6 +6,7 @@ const session = require('express-session');
 const passportSetup = require("./passport")
 const authRoute = require("./routes/auth");
 const cors = require("cors");
+const axios = require("axios")
 
 const app = express()
 app.use(session({

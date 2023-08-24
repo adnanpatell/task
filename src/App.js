@@ -4,6 +4,8 @@ import { useEffect,useState } from 'react';
 import axios from 'axios';
 import Home from './Component/Home';
 import AuthForm from './Component/AuthForm';
+import ImageUpload from './Component/ImageUpload';
+
 
 function App() {
   const [user, setUser] = useState(null);
@@ -17,6 +19,7 @@ setUser(data.user._json)
       console.log(error)
     }
   }
+  
   useEffect(()=>{
     getUser();
   },[])
@@ -26,6 +29,7 @@ setUser(data.user._json)
       <Routes>
         <Route exact path="/" element={user?<Home user={user}/>:<Navigate to="/login" />} />
         <Route exact path="/login" element={user?<Navigate to="/" />: <AuthForm />} />
+        <Route exact path='/upload' element={<ImageUpload />} />
       </Routes>
       
     </div>
