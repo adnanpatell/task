@@ -1,9 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import ImageGallery from './ImageGallery';
-import ImageList from './ImageList';
-
-
 
 const Home = (userDetails) => {
     const user = userDetails.user;

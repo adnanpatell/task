@@ -7,7 +7,7 @@ const passportSetup = require("./passport")
 const authRoute = require("./routes/auth");
 const cors = require("cors");
 const axios = require("axios")
-
+const viewCounts = {};
 const app = express()
 app.use(session({
     secret: 'keyboard cat',
@@ -49,3 +49,31 @@ app.get('/fetch-images', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+
+
+
+
+// Endpoint to increment image views
+app.post('/increment-image-views', (req, res) => {
+  try {
+    const { imageId } = req.body;
+
+    // Increment the view count for the specified image
+    viewCounts[imageId] = (viewCounts[imageId] || 0) + 1;
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error incrementing image views:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Endpoint to get image views
+app.post('/get-image-views', (req, res) => {
+  const { imageId } = req.body;
+  const viewCount = viewCounts[imageId] || 0;
+
+  res.json({ viewCount });
+});
+

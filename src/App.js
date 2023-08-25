@@ -6,7 +6,6 @@ import Home from './Component/Home';
 import AuthForm from './Component/AuthForm';
 import ImageUpload from './Component/ImageUpload';
 import ImageGallery from '../src/Component/ImageGallery'; // Import your ImageGallery component
-import { fetchImages } from '../src/Component/ImageService';
 
 function App() {
   const [user, setUser] = useState(null);
