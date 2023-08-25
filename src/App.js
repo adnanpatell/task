@@ -5,7 +5,8 @@ import axios from 'axios';
 import Home from './Component/Home';
 import AuthForm from './Component/AuthForm';
 import ImageUpload from './Component/ImageUpload';
-
+import ImageGallery from '../src/Component/ImageGallery'; // Import your ImageGallery component
+import { fetchImages } from '../src/Component/ImageService';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -30,6 +31,7 @@ setUser(data.user._json)
         <Route exact path="/" element={user?<Home user={user}/>:<Navigate to="/login" />} />
         <Route exact path="/login" element={user?<Navigate to="/" />: <AuthForm />} />
         <Route exact path='/upload' element={<ImageUpload />} />
+        <Route path="/image-gallery" element={<ImageGallery />} />
       </Routes>
       
     </div>

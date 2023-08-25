@@ -1,33 +1,41 @@
-// components/ImageGallery.js
-
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchImages } from '../actions/Images';
+import React, { useEffect, useState } from 'react';
 
 function ImageGallery() {
-  const dispatch = useDispatch();
-  const { images, loading, error } = useSelector((state) => state.images);
+  const [images, setImages] = useState([]);
 
   useEffect(() => {
-    dispatch(fetchImages());
-  }, [dispatch]);
+    async function fetchImages() {
+      try {
+        const response = await fetch('http://localhost:8080/fetch-images'); // This will now go to your Express server
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+        if (!response.ok) {
+          throw new Error('Failed to fetch images');
+        }
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+        const data = await response.json();
+        // Extract image URLs from the resources
+        const imageUrls = data.resources.map((resource) => resource.url);
+        setImages(imageUrls);
+      } catch (error) {
+        console.error('Error fetching images:', error);
+      }
+    }
+
+    fetchImages();
+  }, []);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {images.map((image) => (
-        <div key={image.public_id} className="bg-white p-4 rounded-lg shadow-md">
-          <img src={image.secure_url} alt={image.public_id} className="w-full h-auto" />
-        </div>
-      ))}
-    </div>
+    <div>
+  <h1 className="text-2xl font-semibold mb-4">Image Gallery</h1>
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    {images.map((imageUrl, index) => (
+      <div key={index} className="bg-white p-4 rounded-lg shadow-md">
+        <img src={imageUrl} alt={`Image ${index}`} className="w-full h-auto" />
+      </div>
+    ))}
+  </div>
+</div>
+
   );
 }
 

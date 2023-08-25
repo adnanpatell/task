@@ -15,8 +15,6 @@ app.use(session({
     saveUninitialized: true 
   }));
 
-
-
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(cors({
@@ -24,7 +22,7 @@ app.use(cors({
     methods:"GET,POST,PUT,DELETE",
     credentials:true,
 }))
-
+app.use(cors());
 app.use("/auth",authRoute)
 const port = process.env.PORT || 8080;
 app.use(express.json()) 
@@ -32,3 +30,22 @@ app.use(express.json())
 app.listen(port, () => {
   console.log(`Assignment app listening on port ${port}`)
 })
+app.get('/fetch-images', async (req, res) => {
+  try {
+    const response = await fetch('https://api.cloudinary.com/v1_1/dhh8atda3/resources/image', {
+      headers: {
+        Authorization: `Basic ${Buffer.from('541919539486426:H6YnY-q3ZlVCenE68A1V1jIOD6A').toString('base64')}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch images');
+    }
+
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error('Error fetching images:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
