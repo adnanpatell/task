@@ -29,12 +29,12 @@ export const fetchImages = () => {
 
     try {
       // Include your API key and API secret key for basic authentication
-      const config = {
-        auth: {
-          username: '541919539486426',
-          password: 'H6YnY-q3ZlVCenE68A1V1jIOD6A',
-        },
-      };
+      // const config = {
+      //   auth: {
+      //     username: '541919539486426',
+      //     password: 'H6YnY-q3ZlVCenE68A1V1jIOD6A',
+      //   },
+      // };
 
       const res = await axios.get('https://541919539486426:H6YnY-q3ZlVCenE68A1V1jIOD6A@api.cloudinary.com/v1_1/dhh8atda3/resources/image');
       const images = res.data.resources;

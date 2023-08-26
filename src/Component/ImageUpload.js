@@ -7,26 +7,34 @@ export default function ImageUpload() {
   const [desc, setDesc] = useState('');
   const navigate = useNavigate();
   const handleSubmit = async () => {
-
     const data = new FormData();
     data.append('file', image);
     data.append('upload_preset', 'assignment_mern');
-    data.append('cloud_name', "dhh8atda3")
-
+    data.append('cloud_name', 'dhh8atda3');
+  
     try {
       const res = await fetch('https://api.cloudinary.com/v1_1/dhh8atda3/image/upload', {
         method: 'POST',
-        body: data
-
+        body: data,
       });
-
+  
       const img = await res.json();
-      console.log(img.secure_url);
-      navigate("/")
+      const publicId = img.public_id; // Get the uploaded image's public_id
+  
+      // Send the public_id to the server for tracking view count
+      await fetch('http://localhost:8080/increment-image-views', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ publicId }),
+      });
+  
+      console.log(publicId);
+      navigate('/');
     } catch (err) {
       console.error(err);
     }
-
   };
 
   return (
