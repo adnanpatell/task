@@ -9,7 +9,7 @@ CLOUDINARY_API_SECRET=<your_cloudinary_api_secret>
 # Start the server
 nodemon index.js
 
-Frontend:
+# Frontend:
 
 # Install dependencies
 npm install
